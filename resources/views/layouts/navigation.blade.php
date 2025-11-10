@@ -9,10 +9,10 @@
                     <a href="{{ route('home') }}" class="flex items-center gap-2">
                         <x-application-logo class="block h-8 w-auto text-orange-500" />
                         <span class="hidden sm:inline text-sm font-semibold tracking-wide text-gray-800">
-                            Dekd Lite
+                            Dek-Due
                         </span>
                     </a>
-                </div>
+                </div> 
 
                 {{-- Desktop Nav Links --}}
                 <div class="hidden sm:flex items-center gap-6 text-sm font-medium">

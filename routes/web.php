@@ -64,10 +64,12 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::get('/', fn () => view('admin.dashboard'))->name('dashboard');
 
-        Route::resource('posts', AdminPostController::class)->except(['show']);
+        // หน้า list กระทู้แอดมิน
+        Route::get('/posts', [AdminPostController::class, 'index'])->name('posts.index');
 
-        Route::post('posts/{post}/approve', [AdminPostController::class, 'approve'])
-            ->name('posts.approve');
+        // ปุ่มสลับสถานะ เปิด/ปิดการเผยแพร่
+        Route::patch('/posts/{post}/toggle', [AdminPostController::class, 'toggleStatus'])
+            ->name('posts.toggle');
     });
 
 

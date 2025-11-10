@@ -11,15 +11,30 @@ class PostController extends Controller
     // แสดงรายการกระทู้ทั้งหมด (เน้นที่ pending ด้านบน)
     public function index()
     {
-        $pending = Post::where('is_published', false)
+        $pendingPosts = Post::with('author')
+            ->where('is_published', false)
             ->latest()
             ->get();
 
-        $published = Post::where('is_published', true)
+        $publishedPosts = Post::with('author')
+            ->where('is_published', true)
             ->latest()
-            ->paginate(15);
+            ->get();
 
-        return view('admin.posts.index', compact('pending', 'published'));
+        return view('admin.posts.index', compact('pendingPosts', 'publishedPosts'));
+    }
+
+    public function toggleStatus(Post $post)
+    {
+        $post->is_published = ! $post->is_published;
+        $post->save();
+
+        return back()->with(
+            'success',
+            $post->is_published
+                ? 'อนุมัติและเผยแพร่กระทู้เรียบร้อยแล้ว'
+                : 'ซ่อนกระทู้ออกจากหน้าเว็บเรียบร้อยแล้ว'
+        );
     }
 
     // อนุมัติให้โพสต์ไปหน้าบ้าน
