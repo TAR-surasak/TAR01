@@ -106,7 +106,7 @@ Route::middleware(['auth', 'role:admin'])
         // toggle สถานะเผยแพร่
         Route::patch('/posts/{post}/toggle', [AdminPostController::class, 'toggleStatus'])
             ->name('posts.toggle');
-    });
+    
 
         Route::resource('posts', AdminPostController::class)->except(['show']);
         Route::post('posts/{post}/approve', [AdminPostController::class, 'approve'])->name('posts.approve');
